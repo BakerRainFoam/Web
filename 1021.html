@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大樂透自動選號與對獎系統</title>
+
+    <style>
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #fff3e0);
+            text-align: center;
+            padding: 30px 15px;
+            margin: 0;
+        }
+
+        h1 {
+            color: #005bd3;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            color: #2c3e50;
+        }
+
+        p {
+            font-size: 18px;
+            color: #34495e;
+            min-height: 27px;
+        }
+
+        hr {
+            border: none;
+            border-top: 2px dashed #bdc3c7;
+            margin: 25px auto;
+            max-width: 600px;
+        }
+
+        /* 按鈕共同樣式 */
+        button {
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            margin: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 滑鼠移到按鈕上 */
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 12px rgba(0, 0, 0, 0.2);
+            filter: brightness(1.1);
+        }
+
+        /* 按下按鈕時 */
+        button:active {
+            transform: scale(0.95);
+        }
+
+        /* 各按鈕顏色 */
+        .random-btn {
+            background-color: #3498db;
+        }
+
+        .draw-btn {
+            background-color: #e74c3c;
+        }
+
+        .check-btn {
+            background-color: #27ae60;
+        }
+
+        .reset-btn {
+            background-color: #7f8c8d;
+        }
+
+        /* 顯示區塊 */
+        .section {
+            background: white;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        #result-text {
+            font-weight: bold;
+            color: #d35400;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>資三甲黃涒幃 大樂透自動選號與對獎系統</h1>
+
+    <div class="section">
+        <h3>1. 我的彩券號碼</h3>
+        <p id="my-numbers">請點擊下方按鈕進行選號</p>
+
+        <button class="random-btn" onclick="
+            userNumbers = [];
+
+            while (userNumbers.length < 6) {
+                let randNum = Math.floor(Math.random() * 49) + 1;
+
+                if (!userNumbers.includes(randNum)) {
+                    userNumbers.push(randNum);
+                }
+            }
+
+            userNumbers.sort((a, b) => a - b);
+
+            document.getElementById('my-numbers').innerText =
+                '我的號碼：' + userNumbers.join(', ');
+
+            document.getElementById('result-text').innerText = '';
+        ">自動選號</button>
+    </div>
+
+    <div class="section">
+        <h3>2. 本期開獎號碼</h3>
+        <p id="draw-numbers">等待開獎中...</p>
+
+        <button class="draw-btn" onclick="
+            winningNumbers = [];
+
+            while (winningNumbers.length < 6) {
+                let randNum = Math.floor(Math.random() * 49) + 1;
+
+                if (!winningNumbers.includes(randNum)) {
+                    winningNumbers.push(randNum);
+                }
+            }
+
+            winningNumbers.sort((a, b) => a - b);
+
+            document.getElementById('draw-numbers').innerText =
+                '開獎號碼：' + winningNumbers.join(', ');
+
+            document.getElementById('result-text').innerText = '';
+        ">開始開獎</button>
+    </div>
+
+    <div class="section">
+        <h3>3. 對獎結果</h3>
+
+        <button class="check-btn" onclick="
+            if (userNumbers.length === 0 ||
+                winningNumbers.length === 0) {
+
+                alert('請先點擊「自動選號」與「開始開獎」！');
+
+            } else {
+                let matchCount = 0;
+                let matchedList = [];
+
+                for (let i = 0; i < userNumbers.length; i++) {
+                    if (winningNumbers.includes(userNumbers[i])) {
+                        matchCount++;
+                        matchedList.push(userNumbers[i]);
+                    }
+                }
+
+                let resultText = '對中 ' + matchCount + ' 個號碼！';
+
+                if (matchCount > 0) {
+                    resultText +=
+                        '（對中號碼：' + matchedList.join(', ') + '）';
+                }
+
+                document.getElementById('result-text').innerText =
+                    resultText;
+            }
+        ">進行對獎</button>
+
+        <p id="result-text"></p>
+
+        <!-- 新增重新開始按鈕 -->
+        <button class="reset-btn" onclick="
+            userNumbers = [];
+            winningNumbers = [];
+
+            document.getElementById('my-numbers').innerText =
+                '請點擊下方按鈕進行選號';
+
+            document.getElementById('draw-numbers').innerText =
+                '等待開獎中...';
+
+            document.getElementById('result-text').innerText =
+                '';
+
+        ">重新開始</button>
+    </div>
+
+    <script>
+        let userNumbers = [];
+        let winningNumbers = [];
+    </script>
+
+</body>
+</html>
