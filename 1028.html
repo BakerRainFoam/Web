@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>資訊三甲 黃涒幃</h1>
+
+<script>
+function light(sw) {
+  var pic;
+
+  if (sw == 0) {
+    pic = "pic/six.gif";
+    document.getElementById('myImage2').style.display = "none";
+  }
+  else if (sw == 1) {
+    pic = "pic/seven.gif";
+    document.getElementById('myImage2').style.display = "none";
+  }
+  else if (sw == 2) {
+    pic = "pic/six.gif";
+    document.getElementById('myImage2').src = "pic/seven.gif";
+    document.getElementById('myImage2').style.display = "inline";
+  }
+
+  document.getElementById('myImage1').src = pic;
+}
+</script>
+
+<img id="myImage1" src="pic/six.gif" width="100" height="180">
+
+<img id="myImage2" style="display:none" width="100" height="180">
+
+<p>
+  <button type="button" onclick="light(1)">Light On</button>
+  <button type="button" onclick="light(0)">Light Off</button>
+  <button type="button" onclick="light(2)">Both</button>
+</p>
+
+</body>
+</html>
